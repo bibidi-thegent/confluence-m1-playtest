@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confluence Tester Guide</title>
+<meta name="description" content="How to play the Project Confluence M1 combat playtest: setup, the 45-minute script, controls, the survey and sending your files.">
+<!--
+  Project Confluence · M1 playtest tester guide. Self-contained: inline CSS, one small inline script, nothing external.
+  Published next to the build as guide.html (tools/publish-playtest.mjs); in the project folder it is playtest-guide.html
+  beside m1-sandbox.html, and the "Open the game" links follow (the inline script at the end).
+  The script follows m1-combat-spec.md, "Playtest plan"; the controls follow the sandbox's CONTROLS and KEYBIND_ACTIONS defaults.
+-->
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#f6f5f2; --surface:#ffffff; --text:#1d1f23; --muted:#5b5f66; --line:#dcd9d2;
+  --accent:#255f9e; --accent-soft:#e6eef8; --kbd:#f1efea; --note:#fff7e0; --note-line:#e7d49a;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16181b; --surface:#1f2226; --text:#ece9e3; --muted:#a8a49b; --line:#34383e;
+    --accent:#79b4f5; --accent-soft:#1d2a3a; --kbd:#2a2d33; --note:#2a2618; --note-line:#5a4f2a;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:1.75rem;line-height:1.2;margin:0 0 6px}
+h2{font-size:1.2rem;margin:34px 0 10px;padding-top:4px}
+h3{font-size:1rem;margin:18px 0 6px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:22px}
+li{margin:4px 0}
+a{color:var(--accent)}
+.lede{color:var(--muted);margin:0 0 18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.play{display:inline-block;margin:6px 0 2px;padding:10px 18px;border-radius:8px;background:var(--accent);color:var(--bg);font-weight:700;text-decoration:none}
+.play:hover{filter:brightness(1.08)}
+.note{background:var(--note);border:1px solid var(--note-line);border-radius:10px;padding:10px 14px;margin:12px 0}
+nav ol{columns:2;column-gap:24px;padding-left:20px;margin:6px 0}
+nav li{break-inside:avoid}
+kbd{display:inline-block;min-width:1.6em;padding:0 6px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;background:var(--kbd);font:.85em/1.5 ui-monospace,Consolas,monospace;text-align:center;white-space:nowrap}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:8px 8px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+th{font-size:.85rem;color:var(--muted);font-weight:600}
+td.k{white-space:nowrap;width:1%;padding-right:14px}
+td.t{white-space:nowrap;width:1%;font-variant-numeric:tabular-nums;color:var(--muted);padding-right:14px}
+.muted{color:var(--muted)}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps>li{counter-increment:s;position:relative;padding-left:36px;margin:10px 0}
+.steps>li::before{content:counter(s);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+footer{margin-top:40px;color:var(--muted);font-size:.9rem}
+@media (max-width:520px){
+  body{font-size:15px}
+  h1{font-size:1.45rem}
+  nav ol{columns:1}
+  td.k{white-space:normal}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Confluence M1 playtest: tester guide</h1>
+<p class="lede">Thanks for helping test Project Confluence. Everything you need is on this page.</p>
+
+<div class="card">
+  <p><a class="play" id="playLink" href="index.html">Open the game</a></p>
+  <p class="muted">Use Chrome or Edge on a desktop or laptop. Keep this guide open in another tab or on your phone.</p>
+</div>
+
+<nav aria-label="On this page"><ol>
+  <li><a href="#what">What this is</a></li>
+  <li><a href="#need">What you need</a></li>
+  <li><a href="#start">How to start</a></li>
+  <li><a href="#saving">Setting up saving</a></li>
+  <li><a href="#script">The 45-minute script</a></li>
+  <li><a href="#survey">The survey</a></li>
+  <li><a href="#send">Sending your files</a></li>
+  <li><a href="#controls">Controls</a></li>
+  <li><a href="#privacy">Privacy</a></li>
+  <li><a href="#limits">Known limits</a></li>
+</ol></nav>
+
+<h2 id="what">What this is</h2>
+<p>This is a small, single-player slice of the game's combat: a training ground, three enemy camps and one boss, with two classes to play. We want to find out two things. Can you see every enemy attack coming in time to get out of the way? And do the three ways of aiming (where you face, where your cursor points, and the enemy you've selected) feel responsive and fair? You are testing the game, not being tested. There are no wrong answers, and getting hit a lot is useful to us.</p>
+
+<h2 id="need">What you need</h2>
+<ul>
+  <li><b>Chrome or Edge</b> on a desktop or laptop. Phones and tablets won't work.</li>
+  <li><b>A mouse with a right button.</b> You steer by holding the right button, which is hard on a touchpad.</li>
+  <li><b>About 45 minutes</b> in one sitting.</li>
+  <li>Sound on, if you can. Big attacks play a warning sound when they start.</li>
+</ul>
+
+<h2 id="start">How to start</h2>
+<ol class="steps">
+  <li>Open the game with the <a class="playlink" href="index.html">Open the game</a> link at the top of this page.</li>
+  <li>Type your tester name in the <b>Tester</b> box. Use the one Bibidi gave you, such as T03. It goes into your file names.</li>
+  <li>Pick a class to start with: <b>Bulwark</b>, a sturdy fighter who wants to be close, or <b>Stormcaller</b>, who fights from range. You'll play both.</li>
+  <li>Click <b>Enter in fullscreen</b>. Fullscreen stops browser shortcuts, such as Ctrl+W, from closing the game by accident. If you leave fullscreen, the <b>Fullscreen</b> button at the top right puts you back.</li>
+</ol>
+
+<h2 id="saving">Setting up saving</h2>
+<p>Do this once, right after you start:</p>
+<ol class="steps">
+  <li>Press <kbd>P</kbd> to open the <b>Playtest</b> panel.</li>
+  <li>Click <b>Choose telemetry folder</b> and pick an empty folder, for example a new folder called "Confluence playtest" on your desktop. When the browser asks, let it save files there.</li>
+  <li>That's all. The game now saves your file every 30 seconds and after each fight. Press <kbd>P</kbd> again to close the panel.</li>
+</ol>
+<div class="note">If you reload the page, choose the folder again: each time you open or reload the game, it starts a new file in that folder. If your browser can't pick a folder, click <b>Download JSON</b> in the same panel at the end, after the survey.</div>
+
+<h2 id="script">The 45-minute script</h2>
+<p>Times are a guide, not a race. If a step runs long, carry on; if you finish early, play a little more of that step. Press <kbd>T</kbd> to teleport between areas and <kbd>Y</kbd> to swap class. Both work only out of combat.</p>
+<table>
+  <tr><th>Time</th><th>What to do</th></tr>
+  <tr><td class="t">0:00–0:10</td><td><b>Training dummies, five minutes per class.</b> Press <kbd>K</kbd> to open Loadout and Talents, and try all three ready-made loadouts (presets) for your class, using every button on the dummies. Then press <kbd>Y</kbd> to swap class and do the same.<br><span class="muted">Bulwark: Bastion Standard, Rune Ward, Skirmisher. Stormcaller: Tempest Standard, Arc Grid, Storm Runner.</span></td></tr>
+  <tr><td class="t">0:10–0:20</td><td><b>Camps one and two, with each class.</b> Teleport to the Open area. Clear camp one (west) and camp two (east) with Bulwark, then swap and clear them again with Stormcaller. A cleared camp comes back about 40 seconds later, once you've moved away from it. From here on, use whichever loadout you like best.</td></tr>
+  <tr><td class="t">0:20–0:25</td><td><b>The Juggernaut, with each class.</b> Teleport to the Juggernaut camp and beat the big armoured enemy once as Bulwark and once as Stormcaller.</td></tr>
+  <tr><td class="t">0:25–0:40</td><td><b>The boss, four attempts.</b> Teleport to the Boss arena gate and walk in. Make three attempts with the class you prefer, then one with the other class. Win or lose, each try counts. If you're defeated, click <b>Release and respawn</b> and teleport back.</td></tr>
+  <tr><td class="t">0:40–0:45</td><td><b>Wrap up.</b> First, a 10-second frame-rate check: press <kbd>B</kbd> for the Debug panel, click <b>Stress test</b>, and keep the game window in front until it shows your frame rate. Then fill in the survey (below).</td></tr>
+</table>
+
+<h2 id="survey">The survey</h2>
+<p>At the end, press <kbd>P</kbd> and scroll to <b>Survey</b> at the bottom of the Playtest panel. Rate five statements from 1 (strongly disagree) to 5 (strongly agree):</p>
+<ul>
+  <li>I could tell where each attack would land.</li>
+  <li>I understood why I got hit.</li>
+  <li>Facing abilities felt responsive and fair.</li>
+  <li>Cursor abilities felt responsive and fair.</li>
+  <li>Target abilities felt responsive and fair.</li>
+</ul>
+<p>There's a box for anything that felt unfair or hard to read. Please use it: short notes help a lot. Click <b>Submit survey</b>. The game saves right away.</p>
+
+<h2 id="send">Sending your files</h2>
+<p>When you're done, open your telemetry folder and send Bibidi <b>every .json file in it</b>, the way Bibidi asked (for example, zip the folder and attach it). Send them all, even small ones: each time you open or reload the game, it starts a new file. If you used Download JSON, send the downloaded files instead.</p>
+
+<h2 id="controls">Controls</h2>
+<p>These are the default keys. The in-game Help (<kbd>H</kbd>) shows the same table with your current keys.</p>
+<table>
+  <tr><th>Key</th><th>What it does</th></tr>
+  <tr><td class="k"><kbd>W</kbd> <kbd>S</kbd></td><td>Move forward and back</td></tr>
+  <tr><td class="k"><kbd>A</kbd> <kbd>D</kbd></td><td>Step left and right</td></tr>
+  <tr><td class="k">Hold right mouse</td><td>Turn the camera and your character together. The cursor hides and comes back where you pressed.</td></tr>
+  <tr><td class="k">Right mouse up</td><td>A free cursor, for cursor abilities and picking targets</td></tr>
+  <tr><td class="k">Left click</td><td>Select an enemy. With it selected, click to swing your basic attack; hold to keep swinging.</td></tr>
+  <tr><td class="k">Left drag</td><td>Look around without turning your character</td></tr>
+  <tr><td class="k"><kbd>Tab</kbd></td><td>Cycle through enemies in front of you, nearest first</td></tr>
+  <tr><td class="k"><kbd>1</kbd>–<kbd>4</kbd></td><td>Your four core abilities</td></tr>
+  <tr><td class="k"><kbd>Q</kbd></td><td>Talent button: it lights gold with a chime when it's ready</td></tr>
+  <tr><td class="k"><kbd>E</kbd> <kbd>R</kbd></td><td>Your two Utility abilities</td></tr>
+  <tr><td class="k"><kbd>F</kbd></td><td>Signature ability</td></tr>
+  <tr><td class="k"><kbd>G</kbd></td><td>Defensive ability</td></tr>
+  <tr><td class="k"><kbd>Shift</kbd></td><td>Evade: a quick dash the way you're moving, or backward when standing still</td></tr>
+  <tr><td class="k"><kbd>Space</kbd></td><td>Jump; press again in the air to double jump</td></tr>
+  <tr><td class="k"><kbd>Ctrl</kbd></td><td>Sprint (hold). A fresh press also cancels the spell you're casting.</td></tr>
+  <tr><td class="k"><kbd>Esc</kbd></td><td>Cancel your cast, else clear your target, else close the open panel</td></tr>
+  <tr><td class="k">Mouse wheel</td><td>Zoom</td></tr>
+  <tr><td class="k"><kbd>K</kbd></td><td>Loadout and Talents (out of combat): presets, your ability picks and your Talent path</td></tr>
+  <tr><td class="k"><kbd>Y</kbd> · <kbd>T</kbd></td><td>Swap class · Teleport (out of combat)</td></tr>
+  <tr><td class="k"><kbd>P</kbd></td><td>Playtest panel: saving and the survey</td></tr>
+  <tr><td class="k"><kbd>H</kbd></td><td>Help: every control and the combat rules</td></tr>
+  <tr><td class="k"><kbd>L</kbd> · <kbd>M</kbd> · <kbd>O</kbd> · <kbd>B</kbd></td><td>Combat log · Damage meter · Settings · Debug</td></tr>
+</table>
+<p>You can change keys out of combat: open Settings (<kbd>O</kbd>) and choose <b>Keybinds</b>. Movement (W, A, S, D), the mouse buttons, the wheel and Esc stay fixed. Out of combat you can also drag the core abilities (1–4) around the action bar to reorder them.</p>
+
+<h2 id="privacy">Privacy</h2>
+<p>Your files hold gameplay data (what you pressed, where attacks landed, your fights and your survey answers) and the tester name you type. They also note your browser version, screen size and graphics card for the frame-rate check. Nothing else: no account, email or location.</p>
+
+<h2 id="limits">Known limits</h2>
+<ul>
+  <li>Browser windows inside other apps, such as an app's built-in preview pane, block mouse capture. There, holding right mouse steers with a ring on screen instead of hiding the cursor. Open the game in Chrome or Edge itself.</li>
+  <li>Saving to a folder needs Chrome or Edge. Other browsers can only use Download JSON.</li>
+  <li>Outside fullscreen, the game asks before the tab closes, so a stray shortcut doesn't end your session.</li>
+  <li>The in-game Help (<kbd>H</kbd>) has every control and the combat rules, including how to read enemy attacks.</li>
+</ul>
+
+<footer>Project Confluence · M1 combat sandbox playtest. Questions? Ask Bibidi.</footer>
+</main>
+<script>
+// In the project folder this page is playtest-guide.html beside m1-sandbox.html; published, it is guide.html beside index.html.
+(function () {
+  if (!/playtest-guide\.html$/i.test(location.pathname)) return;
+  var links = document.querySelectorAll('#playLink, .playlink');
+  for (var i = 0; i < links.length; i++) links[i].setAttribute('href', 'm1-sandbox.html');
+})();
+</script>
+</body>
+</html>
