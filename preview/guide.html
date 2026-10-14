@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confluence Roster Preview</title>
+<meta name="description" content="How to try the Project Confluence roster preview: every Expertise and Discipline, unfinished, what to try and what feedback to send.">
+<!--
+  Project Confluence · roster preview guide (roster PV1). Self-contained: inline CSS, one small inline script, nothing external.
+  Published next to the preview build as preview/guide.html (tools/publish-playtest.mjs --preview), one folder below the M1
+  playtest page; in the project folder it is preview-guide.html beside m1-sandbox.html, and the links follow (the inline
+  script at the end). The Discipline lines follow the DISCIPLINES blurbs (src/data/exp-*.js) in plain words.
+-->
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#f6f5f2; --surface:#ffffff; --text:#1d1f23; --muted:#5b5f66; --line:#dcd9d2;
+  --accent:#255f9e; --accent-soft:#e6eef8; --kbd:#f1efea; --note:#fff7e0; --note-line:#e7d49a;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16181b; --surface:#1f2226; --text:#ece9e3; --muted:#a8a49b; --line:#34383e;
+    --accent:#79b4f5; --accent-soft:#1d2a3a; --kbd:#2a2d33; --note:#2a2618; --note-line:#5a4f2a;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:1.75rem;line-height:1.2;margin:0 0 6px}
+h2{font-size:1.2rem;margin:34px 0 10px;padding-top:4px}
+h3{font-size:1rem;margin:18px 0 6px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:22px}
+li{margin:4px 0}
+a{color:var(--accent)}
+.lede{color:var(--muted);margin:0 0 18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.play{display:inline-block;margin:6px 0 2px;padding:10px 18px;border-radius:8px;background:var(--accent);color:var(--bg);font-weight:700;text-decoration:none}
+.play:hover{filter:brightness(1.08)}
+.note{background:var(--note);border:1px solid var(--note-line);border-radius:10px;padding:10px 14px;margin:12px 0}
+nav ol{columns:2;column-gap:24px;padding-left:20px;margin:6px 0}
+nav li{break-inside:avoid}
+kbd{display:inline-block;min-width:1.6em;padding:0 6px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;background:var(--kbd);font:.85em/1.5 ui-monospace,Consolas,monospace;text-align:center;white-space:nowrap}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:8px 8px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+th{font-size:.85rem;color:var(--muted);font-weight:600}
+td.d{width:34%;padding-right:14px}
+td.d small{display:block;color:var(--muted);font-size:.85rem}
+tr.x td{padding-top:16px;font-size:.85rem;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line)}
+.muted{color:var(--muted)}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps>li{counter-increment:s;position:relative;padding-left:36px;margin:10px 0}
+.steps>li::before{content:counter(s);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+footer{margin-top:40px;color:var(--muted);font-size:.9rem}
+@media (max-width:520px){
+  body{font-size:15px}
+  h1{font-size:1.45rem}
+  nav ol{columns:1}
+  td.d{width:40%}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Confluence roster preview: guide</h1>
+<p class="lede">Thanks for trying the new classes early. They are unfinished, so anything that feels off is worth telling us.</p>
+
+<div class="card">
+  <p><a class="play" id="playLink" href="index.html">Open the roster preview</a></p>
+  <p class="muted">Use Chrome or Edge on a desktop or laptop. This page is not part of the M1 playtest: if Bibidi asked you to do the playtest, use the <a class="mainlink" href="../">main page</a> and its <a class="mainguide" href="../guide.html">tester guide</a> instead.</p>
+</div>
+
+<nav aria-label="On this page"><ol>
+  <li><a href="#what">What this is</a></li>
+  <li><a href="#pick">Picking a Discipline</a></li>
+  <li><a href="#roster">The 16 Disciplines</a></li>
+  <li><a href="#practice">Healers and tanks</a></li>
+  <li><a href="#feedback">What to tell us</a></li>
+  <li><a href="#rough">Known rough edges</a></li>
+  <li><a href="#send">Sending files and feedback</a></li>
+  <li><a href="#privacy">Privacy</a></li>
+</ol></nav>
+
+<h2 id="what">What this is</h2>
+<p>The same combat sandbox as the M1 playtest, with every class in it: all eight Expertises and both Disciplines of each, 16 in all. A Discipline is a class's role and style: Bulwark can be Bastion, a tank, or Warbreaker, a heavy hitter.</p>
+<ul>
+  <li><b>It's unfinished.</b> Bastion and Tempest are the two M1 classes. The other 14 are new and most of them are still being built, so you'll find gaps and bugs.</li>
+  <li><b>The numbers aren't final.</b> Damage, healing and threat haven't been measured yet, so a class that seems far too strong or too weak may just need tuning. Tell us anyway.</li>
+  <li><b>It's not the M1 playtest.</b> There's no script and no time limit. Play whatever you like, for as long as you like. Your preview files are kept apart from the playtest's results.</li>
+</ul>
+
+<h2 id="pick">Picking a Discipline</h2>
+<ol class="steps">
+  <li>Type your tester name in the <b>Tester</b> box on the start screen. It goes into your file names.</li>
+  <li>Pick a Discipline from the list. They're grouped into Tanks, Healers and DPS; a <b>gate</b> badge marks the two M1 classes and a <b>preview</b> badge the new ones.</li>
+  <li>To change later, press <kbd>K</kbd> out of combat. The menu at the top of <b>Loadout and Talents</b> lists every Discipline. Choose one, then click <b>Equip</b>. <kbd>Y</kbd> swaps back to the one you had before.</li>
+</ol>
+<div class="note">Settings (<kbd>O</kbd>) has <b>Show unfinished Disciplines</b>, on in the preview. Turn it off and the lists keep only the Disciplines that have passed their final checks.</div>
+
+<h2 id="roster">The 16 Disciplines</h2>
+<p>Each Expertise has one resource and a shared set of abilities. Each of its two Disciplines adds a role, a few abilities of its own and two Talent paths for the <kbd>Q</kbd> button.</p>
+<table>
+  <tr><th>Discipline</th><th>In a line</th></tr>
+  <tr class="x"><td colspan="2">Bulwark · Fortitude</td></tr>
+  <tr><td class="d"><b>Bastion</b><small>Tank · M1 class</small></td><td>Holds enemies on you and blocks big hits with Shield Wall. Hit back (Vindicator), or etch runes and detonate them (Runewarden).</td></tr>
+  <tr><td class="d"><b>Warbreaker</b><small>Melee DPS</small></td><td>Your heavy blows crack Fissures in the ground. Hit enemies mid-swing (Breacher), or crack the ground and heave it (Earthshaker).</td></tr>
+  <tr class="x"><td colspan="2">Stormcaller · Charge</td></tr>
+  <tr><td class="d"><b>Tempest</b><small>Ranged DPS · M1 class</small></td><td>Lightning from range. Stack charges and strike (Stormbreaker), or mark the pack and surge it (Arcwright).</td></tr>
+  <tr><td class="d"><b>Conduit</b><small>Healer</small></td><td>Chain heals between allies; a chain that finds nobody hurt strikes an enemy instead. Jump-start an ally going down (Galvanist), or close a circuit and pulse it (Gridkeeper).</td></tr>
+  <tr class="x"><td colspan="2">Shade · Veil</td></tr>
+  <tr><td class="d"><b>Nightblade</b><small>Stealth melee DPS</small></td><td>Strike from behind and from the shadows. Stand behind your target (Blindside), or hide in a shroud among the pack (Shadow Ambush).</td></tr>
+  <tr><td class="d"><b>Mirage</b><small>Evasion tank</small></td><td>A tank who slips hits instead of blocking them: Veil makes you Elusive and your taunts hold the pack. Shrug off hit after hit (Elusive Streak), or let the pack swing at you (Surrounded).</td></tr>
+  <tr class="x"><td colspan="2">Warcaster · Heat</td></tr>
+  <tr><td class="d"><b>Rampart</b><small>Barrier tank</small></td><td>The Heat you spend shields the allies near you. Strike back when your shell breaks (Ironside), or pin the pack against your wall (Wallwright).</td></tr>
+  <tr><td class="d"><b>Bombard</b><small>Mid-range DPS</small></td><td>Keep your Heat in the hot band and your distance from the enemy. Fire at the redline (Artillerist), or line the pack up (Siegebreaker).</td></tr>
+  <tr class="x"><td colspan="2">Mender · Motes</td></tr>
+  <tr><td class="d"><b>Weaver</b><small>Healer</small></td><td>Seeds you plant on allies heal them over time. Grow three Seeds on one ally (Full bloom), or help three hurt allies at once (Triage).</td></tr>
+  <tr><td class="d"><b>Blight</b><small>Ranged DPS</small></td><td>Your Seeds on enemies don't tick; they bloom and burst onto the enemies around. Hold a draining tether (Siphon held), or bloom three Seeds at once (Overgrowth).</td></tr>
+  <tr class="x"><td colspan="2">Bladesinger · Cadence</td></tr>
+  <tr><td class="d"><b>Dirge</b><small>Melee DPS</small></td><td>Your Song strikes the enemies you hit. Alternate builders and Verses (Virtuoso), or gather Song strikes for a Chorus (Choirmaster).</td></tr>
+  <tr><td class="d"><b>Cantor</b><small>Melee healer</small></td><td>Your Song heals the most hurt allies inside it while you fight. Answer a heavy hit (Herald), or climb to the top verse (Hymnist).</td></tr>
+  <tr class="x"><td colspan="2">Duelist · Poise</td></tr>
+  <tr><td class="d"><b>Fencer</b><small>Agile melee DPS</small></td><td>Build Openings and spend them on finishers. Finish at five Openings (Flourish), or dash through the pack (Cut-through).</td></tr>
+  <tr><td class="d"><b>Reaver</b><small>Bleed melee DPS</small></td><td>Your finishers leave bleeds. Refresh a bleed just before it ends (Fresh cut), or bleed the whole pack (Bloodbath).</td></tr>
+  <tr class="x"><td colspan="2">Marksman · Focus</td></tr>
+  <tr><td class="d"><b>Sharpshooter</b><small>Long-range DPS</small></td><td>Stand still to be Steady and hit harder. Stand still and aim (Sniper), or keep your target far away (Overwatch).</td></tr>
+  <tr><td class="d"><b>Trapper</b><small>Trap DPS</small></td><td>Lay traps that spring when enemies step in. Make your target spring one (Huntsman), or chain the traps (Sapper).</td></tr>
+</table>
+<p class="muted">The in-game Help (<kbd>H</kbd>) explains your current Discipline's resource, its line and its Talent paths, and Loadout and Talents (<kbd>K</kbd>) shows every ability with its numbers.</p>
+
+<h2 id="practice">Trying healers and tanks</h2>
+<p>Healers need someone to heal and tanks need something to hold. Press <kbd>B</kbd> for the Debug panel and find <b>Practice fixtures</b>. Each one sets up on the training ground's east side; <b>Stop</b> ends it.</p>
+<ul>
+  <li><b>Ally Drill:</b> four Practice Allies (one Tank Ally and three Party Allies) stand by the Pain Totem, which hurts them, and you, on a pattern: <b>Steady</b>, <b>Pulse</b> or <b>Flood</b>, with the allies stacked, spread or moving. Keep them alive. Left click an ally or its party frame to focus it, or press <kbd>F1</kbd>–<kbd>F4</kbd>. A heal goes to the ally under your cursor, then your focus, then you.</li>
+  <li><b>Tank Drill:</b> the Sparring Champion, a big enemy that can't be moved or stunned. Its Pressure hits every two seconds and its Crush drops a circle to step out of, block or negate. Choose whether it hits whoever it targets or always you, and whether the Practice Allies join in. Take its attention and keep it.</li>
+  <li><b>Threat Drill:</b> a pack of three or five Sparring Dummies, waiting for your pull or pulled at once, with Striker allies dealing damage beside you. Every so often a Dummy breaks off to attack someone else. Win it back with taunts and threat, and keep the pack on you.</li>
+</ul>
+
+<h2 id="feedback">What to tell us</h2>
+<ul>
+  <li><b>The resource:</b> does each Discipline's resource read on the bar under your health? Can you tell when it's full, low or locked without reading the numbers?</li>
+  <li><b>The Talent button (<kbd>Q</kbd>):</b> does it light when you'd expect it to, and can you tell why it lit or went dark?</li>
+  <li><b>The new ground shapes:</b> traps, walls, Fissures, Songs and heals. Do they read clearly? Does any of them ever look like an enemy attack? Your own heals are green.</li>
+  <li><b>Healing:</b> do your heals land on the ally you meant?</li>
+  <li><b>Tanking:</b> do your taunts hold? Does an enemy that slips away come back when you expect?</li>
+  <li><b>Anything broken:</b> a button that does nothing, a number that makes no sense, something stuck on screen. If you can, press <kbd>F12</kbd> and send a screenshot of the Console's red errors.</li>
+  <li>And which Disciplines you'd want to play again, and why.</li>
+</ul>
+
+<h2 id="rough">Known rough edges</h2>
+<ul>
+  <li>The numbers are unmeasured: expect some Disciplines to hit much harder or softer than others.</li>
+  <li>Traps, walls and tethers can stay on the ground after you swap Discipline.</li>
+  <li>The preview shares this browser's settings, keybinds and Bastion and Tempest loadouts with the main page, because they're on the same site.</li>
+  <li>Browser windows inside other apps block mouse capture, as in the main playtest. Open the preview in Chrome or Edge itself.</li>
+</ul>
+
+<h2 id="send">Sending files and feedback</h2>
+<p>Saving works the same way as in the main playtest. Press <kbd>P</kbd> for the Playtest panel and click <b>Choose telemetry folder</b> once after you start; the game then saves your file every 30 seconds and after each fight. If your browser can't pick a folder, click <b>Download JSON</b> at the end.</p>
+<p>Preview files are named <b>m1-preview-…</b>, so they never mix with the playtest's. When you're done, send Bibidi every <b>m1-preview-</b> .json file in your folder, the way Bibidi asked, with your notes. The notes box at the bottom of the Playtest panel's survey also goes into your file.</p>
+
+<h2 id="privacy">Privacy</h2>
+<p>Your files hold gameplay data (what you pressed, where attacks landed, your fights, the Disciplines you played and your notes) and the tester name you type. They also note your browser version, screen size and graphics card for the frame-rate check. Nothing else: no account, email or location.</p>
+
+<footer>Project Confluence · roster preview. Questions? Ask Bibidi.</footer>
+</main>
+<script>
+// In the project folder this page is preview-guide.html beside m1-sandbox.html (the preview there is ?roster=1); published,
+// it is preview/guide.html beside the preview's index.html, one folder below the M1 playtest page and its guide.html.
+(function () {
+  if (!/preview-guide\.html$/i.test(location.pathname)) return;
+  var set = function (sel, href) { var l = document.querySelectorAll(sel); for (var i = 0; i < l.length; i++) l[i].setAttribute('href', href); };
+  set('#playLink', 'm1-sandbox.html?roster=1');
+  set('.mainlink', 'm1-sandbox.html');
+  set('.mainguide', 'playtest-guide.html');
+})();
+</script>
+</body>
+</html>
